@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardCornerRadius="4dp">
+
+<!--THIS IS THE LAYOUT FOR THE CARDS THAT WILL DISPLAY A RESTAURANT/MARKET IN RESULTS-->
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/nameOfRestaurantResult"
+            tools:text="Name of Restaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"/>
+
+
+        <TextView
+            android:id="@+id/categoryOfRestaurantResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptionOfRestaurantResult"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            tools:text="Category" />
+
+        <TextView
+            android:id="@+id/descriptionOfRestaurantResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:layout_below="@id/nameOfRestaurantResult"
+            tools:text="@string/lipsum" />
+
+        <TextView
+            android:id="@+id/distanceToRestaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptionOfRestaurantResult"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="19dp"
+            android:textSize="12sp"
+            tools:text="6.4 miles" />
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
