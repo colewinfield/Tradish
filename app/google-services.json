@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1069602178332",
+    "firebase_url": "https://tradish-e13e1.firebaseio.com",
+    "project_id": "tradish-e13e1",
+    "storage_bucket": "tradish-e13e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069602178332:android:3b4d401d7159159cff26d9",
+        "android_client_info": {
+          "package_name": "edu.cs.fsu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1069602178332-3fsabgpvqnvs8bke8p5icpr1n695oe8f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPO6JoQrqMqpbV-91sFlC5c9WPjgXWMRM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1069602178332-3fsabgpvqnvs8bke8p5icpr1n695oe8f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

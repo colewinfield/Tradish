@@ -4,4 +4,12 @@
 <!--Placeholder-->
     <string name="lipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </string>
 
+
+<!--Login Fragment-->
+    <string name="login_text_view">Login to Tradish</string>
+    <string name="login_button">Login</string>
+
+<!--Register Fragment-->
+    <string name="signup_button">Sign Up</string>
+    <string name="register_text">Register your account</string>
 </resources>
