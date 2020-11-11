@@ -3,7 +3,7 @@ package edu.cs.fsu.tradish;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,4 +29,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onStartDashboard() {
+
+    }
 }
