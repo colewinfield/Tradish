@@ -18,11 +18,14 @@
 <!--        app:layout_constraintEnd_toEndOf="parent" />-->
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_expand_menu_button_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:fab_expandDirection="up"
         app:fab_labelStyle="@style/LabelStyle"
         app:fab_labelsPosition="left"
+        app:fab_addButtonColorNormal="@color/colorPrimaryDark"
+        app:fab_addButtonColorPressed="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.913"
@@ -31,17 +34,25 @@
         app:layout_constraintVertical_bias="0.972">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_search_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="#FFF"
-            app:fab_colorDisabled="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorPrimary"
+            app:fab_title="Search Tradish places"
+            app:fab_icon="@drawable/fab_search"
             app:fabSize="normal"/>
 
-
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_new_location_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#FFF"
+            app:fab_colorPressed="@color/colorPrimary"
+            app:fab_title="Add Tradish spot"
+            app:fab_icon="@drawable/fab_add_location"
+            app:fabSize="normal"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
