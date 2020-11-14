@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         // # WILL LOOK.                                                         #
         // ######################################################################
 
-        onMainStart();
+        onStartLogin();
     }
 
 
@@ -33,9 +33,16 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
 
     }
 
-    private void onMainStart() {
+    private void onStartMain() {
         MainFragment fragment = new MainFragment();
         String tag = MainFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, fragment, tag).commit();
+    }
+
+    private void onStartLogin() {
+        LoginFragment fragment = new LoginFragment();
+        String tag = LoginFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_frame, fragment, tag).commit();
     }
