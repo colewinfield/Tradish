@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1069602178332:android:3b4d401d7159159cff26d9",
         "android_client_info": {
-          "package_name": "edu.cs.fsu"
+          "package_name": "edu.cs.fsu.tradish"
         }
       },
       "oauth_client": [

@@ -22,15 +22,21 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         // # WILL LOOK.                                                         #
         // ######################################################################
 
-        ResultsFragment fragment = new ResultsFragment();
-        String tag = ResultsFragment.class.getCanonicalName();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_frame, fragment, tag).commit();
+        onMainStart();
     }
+
+
 
 
     @Override
     public void onStartDashboard() {
 
+    }
+
+    private void onMainStart() {
+        MainFragment fragment = new MainFragment();
+        String tag = MainFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, fragment, tag).commit();
     }
 }
