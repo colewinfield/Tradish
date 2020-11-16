@@ -1,11 +1,13 @@
 package edu.cs.fsu.tradish;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ public class RegisterFragment extends Fragment {
     private EditText mLogin;
     private EditText mPassword;
     private Button mRegisterButton;
+    private TextView mLoginInstead;
     private OnRegisterListener mListener;
 
     @Override
@@ -32,7 +35,7 @@ public class RegisterFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_login, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_register_user, container, false);
         init(rootView);
 
         return rootView;
@@ -42,6 +45,14 @@ public class RegisterFragment extends Fragment {
         mLogin = view.findViewById(R.id.editTextEmailRegister);
         mPassword = view.findViewById(R.id.editTextPasswordRegister);
         mRegisterButton = view.findViewById(R.id.signupButtonRegister);
+        mLoginInstead = view.findViewById(R.id.loginInsteadText);
+
+        mLoginInstead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onStartLoginFragment();
+            }
+        });
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -69,7 +80,7 @@ public class RegisterFragment extends Fragment {
                                         Toast.makeText(getContext(), "Signup failed",
                                                 Toast.LENGTH_SHORT).show();
                                     } else {
-                                        mListener.onStartDashboard();
+                                        mListener.onStartLoginFragment();
                                     }
                                 }
                             });
@@ -78,8 +89,25 @@ public class RegisterFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnRegisterListener) {
+            mListener = (OnRegisterListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnRegisterFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
     public interface OnRegisterListener {
-        void onStartDashboard();
+        void onStartLoginFragment();
     }
 
 }

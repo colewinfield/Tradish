@@ -3,7 +3,8 @@ package edu.cs.fsu.tradish;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener {
+public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener,
+    LoginFragment.OnLoginListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +27,6 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     }
 
 
-
-
-    @Override
-    public void onStartDashboard() {
-
-    }
-
     private void onStartMain() {
         MainFragment fragment = new MainFragment();
         String tag = MainFragment.class.getCanonicalName();
@@ -45,5 +39,27 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         String tag = LoginFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_frame, fragment, tag).commit();
+    }
+
+    private void onStartRegister() {
+        RegisterFragment fragment = new RegisterFragment();
+        String tag = MainFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, fragment, tag).commit();
+    }
+
+    @Override
+    public void onStartLoginFragment() {
+        onStartLogin();
+    }
+
+    @Override
+    public void onStartRegisterFragment() {
+        onStartRegister();
+    }
+
+    @Override
+    public void onStartDashBoard() {
+        onStartMain();
     }
 }
