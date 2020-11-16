@@ -2,7 +2,6 @@ package edu.cs.fsu.tradish;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import static android.content.ContentValues.TAG;
 
 
 public class LoginFragment extends Fragment {
@@ -36,7 +32,6 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFirebaseAuth = FirebaseAuth.getInstance();
     }
 
     @Nullable
@@ -53,18 +48,7 @@ public class LoginFragment extends Fragment {
         mPassword = view.findViewById(R.id.editTextPasswordLogin);
         mLoginButton = view.findViewById(R.id.loginButtonLogin);
         mRegisterButton = view.findViewById(R.id.signupButtonLogin);
-
         mFirebaseAuth = FirebaseAuth.getInstance();
-
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
-                if( mFirebaseUser != null ){
-                    mListener.onStartDashBoard();
-                }
-            }
-        };
 
         mRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,31 +76,24 @@ public class LoginFragment extends Fragment {
                     mFirebaseAuth.signInWithEmailAndPassword(email, password)
                             .addOnCompleteListener(getActivity(),
                                     new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (!task.isSuccessful()){
-                                Toast.makeText(getContext(), "Login error, try again",
-                                        Toast.LENGTH_SHORT).show();
-                            } else {
-                                mListener.onStartDashBoard();
-                            }
-                        }
-                    });
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (!task.isSuccessful()) {
+                                                Toast.makeText(getContext(), "Login error, try again",
+                                                        Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                mListener.onStartDashBoard();
+                                            }
+                                        }
+                                    });
                 }
             }
         });
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
 
         if (context instanceof OnLoginListener) {
             mListener = (OnLoginListener) context;
@@ -134,6 +111,7 @@ public class LoginFragment extends Fragment {
 
     public interface OnLoginListener {
         void onStartRegisterFragment();
+
         void onStartDashBoard();
     }
 

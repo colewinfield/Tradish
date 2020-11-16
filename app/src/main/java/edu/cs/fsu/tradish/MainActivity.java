@@ -3,6 +3,8 @@ package edu.cs.fsu.tradish;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener,
     LoginFragment.OnLoginListener {
 
@@ -23,7 +25,12 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         // # WILL LOOK.                                                         #
         // ######################################################################
 
-        onStartLogin();
+        if (isUserLoggedIn()) {
+            onStartDashBoard();
+        } else {
+            onStartLogin();
+        }
+
     }
 
 
@@ -61,5 +68,10 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     @Override
     public void onStartDashBoard() {
         onStartMain();
+    }
+
+    public boolean isUserLoggedIn() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        return (auth.getCurrentUser() != null);
     }
 }
