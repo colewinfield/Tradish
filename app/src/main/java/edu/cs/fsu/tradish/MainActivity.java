@@ -6,7 +6,8 @@ import android.os.Bundle;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener,
-    LoginFragment.OnLoginListener, MainFragment.OnDashboardListener {
+    LoginFragment.OnLoginListener, MainFragment.OnDashboardListener,
+    NewLocationFragment.OnNewLocationListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,5 +86,10 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     @Override
     public void onStartNewLocation() {
         onStartNewLocationFragment();
+    }
+
+    @Override
+    public void onStartDashboardFromNL() {
+        onStartDashBoard();
     }
 }

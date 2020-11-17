@@ -6,15 +6,12 @@ public class Restaurant {
     private String mName;
     private String mDescription;
     private String mCategory;
+    private String mAddress;
     private int mReferenceId;
     private Location mLocation;
 
-    public Restaurant(String name, String description, String category, int referenceId) {
-        mName = name;
-        mDescription = description;
-        mReferenceId = referenceId;
-        mCategory = category;
-//        mLocation = location;
+    public Restaurant() {
+        // TODO: get a referenceID method, random number
     }
 
     public String getName() {
@@ -35,5 +32,25 @@ public class Restaurant {
 
     public String getCategory() {
         return mCategory;
+    }
+
+    public void setName(String name) {
+        mName = name;
+    }
+
+    public void setDescription(String description) {
+        mDescription = description;
+    }
+
+    public void setCategory(String category) {
+        mCategory = category;
+    }
+
+    public void setAddress(String address) {
+        mAddress = address;
+    }
+
+    public void setLocation(Location location) {
+        mLocation = location;
     }
 }

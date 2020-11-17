@@ -26,18 +26,18 @@ public class ResultsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         exampleList = new ArrayList<Restaurant>();
-        exampleList.add(new Restaurant("Name 1","Mexican", getText(R.string.lipsum).toString(), 1));
-        exampleList.add(new Restaurant("Name 2", "Chinese", getText(R.string.lipsum).toString(), 2));
-        exampleList.add(new Restaurant("Name 3", "Indian", getText(R.string.lipsum).toString(), 3));
-        exampleList.add(new Restaurant("Name 4","Korean", getText(R.string.lipsum).toString(), 1));
-        exampleList.add(new Restaurant("Name 5", "Irish", getText(R.string.lipsum).toString(), 2));
-        exampleList.add(new Restaurant("Name 6", "Canadian", getText(R.string.lipsum).toString(), 3));
-        exampleList.add(new Restaurant("Name 7","Mexican", getText(R.string.lipsum).toString(), 1));
-        exampleList.add(new Restaurant("Name 8", "Jamaican", getText(R.string.lipsum).toString(), 2));
-        exampleList.add(new Restaurant("Name 9", "Indian", getText(R.string.lipsum).toString(), 3));
-        exampleList.add(new Restaurant("Name 10","Thai", getText(R.string.lipsum).toString(), 1));
-        exampleList.add(new Restaurant("Name 11", "Chinese", getText(R.string.lipsum).toString(), 2));
-        exampleList.add(new Restaurant("Name 12", "Vietnamese", getText(R.string.lipsum).toString(), 3));
+//        exampleList.add(new Restaurant("Name 1","Mexican", getText(R.string.lipsum).toString(), 1));
+//        exampleList.add(new Restaurant("Name 2", "Chinese", getText(R.string.lipsum).toString(), 2));
+//        exampleList.add(new Restaurant("Name 3", "Indian", getText(R.string.lipsum).toString(), 3));
+//        exampleList.add(new Restaurant("Name 4","Korean", getText(R.string.lipsum).toString(), 1));
+//        exampleList.add(new Restaurant("Name 5", "Irish", getText(R.string.lipsum).toString(), 2));
+//        exampleList.add(new Restaurant("Name 6", "Canadian", getText(R.string.lipsum).toString(), 3));
+//        exampleList.add(new Restaurant("Name 7","Mexican", getText(R.string.lipsum).toString(), 1));
+//        exampleList.add(new Restaurant("Name 8", "Jamaican", getText(R.string.lipsum).toString(), 2));
+//        exampleList.add(new Restaurant("Name 9", "Indian", getText(R.string.lipsum).toString(), 3));
+//        exampleList.add(new Restaurant("Name 10","Thai", getText(R.string.lipsum).toString(), 1));
+//        exampleList.add(new Restaurant("Name 11", "Chinese", getText(R.string.lipsum).toString(), 2));
+//        exampleList.add(new Restaurant("Name 12", "Vietnamese", getText(R.string.lipsum).toString(), 3));
     }
 
     @Nullable

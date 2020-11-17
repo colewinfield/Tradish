@@ -49,7 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNewLocation"
-        app:layout_constraintVertical_bias="0.041">
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextCategoryRestaurant"
@@ -70,10 +70,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayerCategory"
-        app:layout_constraintVertical_bias="0.089">
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPasswordRegister"
+            android:id="@+id/descriptionOfRestaurant"
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:hint="description"
@@ -92,10 +92,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputLayoutRegister"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/location_svg" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/shareButton"
         android:layout_width="173dp"
         android:layout_height="67dp"
         android:layout_marginStart="16dp"
@@ -105,10 +106,10 @@
         android:text="Share Your Spot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintHorizontal_bias="0.907"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordInputLayoutRegister"
-        app:layout_constraintVertical_bias="0.787" />
+        app:layout_constraintVertical_bias="0.789" />
 
     <RatingBar
         android:id="@+id/ratingBar"
