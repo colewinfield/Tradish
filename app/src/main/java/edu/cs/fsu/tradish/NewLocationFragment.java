@@ -11,12 +11,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,23 +30,25 @@ import androidx.fragment.app.Fragment;
 import java.io.IOException;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 public class NewLocationFragment extends Fragment {
     private EditText mRestaurantName;
     private EditText mCategory;
     private EditText mDescription;
     private Button mShareButton;
     private RatingBar mAuthenticityLevel;
-    private Location mLocation;
     private String mAddress;
     private Restaurant mRestaurant;
     private OnNewLocationListener mListener;
-
 
 
     @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_new_location, container, false);
+
+        init(rootView);
 
         int apiVersion = Build.VERSION.SDK_INT;
         if (apiVersion > Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -53,32 +57,65 @@ public class NewLocationFragment extends Fragment {
             }
         }
 
-        init(rootView);
 
-        LocationManager mLocationManager = (LocationManager)
-                getContext().getSystemService(Context.LOCATION_SERVICE);
-
-        mLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-
-        final LocationListener mLocationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                Geocoder geo = new Geocoder(getContext());
-                List<Address> addresses = null;
-
-                try {
-                    addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                } catch (IOException e) {
-                    e.printStackTrace();
+            final LocationManager lm = (LocationManager) getContext().getSystemService(
+                    Context.LOCATION_SERVICE);
+            final LocationListener ll = new LocationListener() {
+                @Override
+                public void onStatusChanged(String provider, int status, Bundle extras) {
                 }
 
-                if (addresses != null) {
-                    mRestaurant.setAddress(addresses.get(0).getAddressLine(0));
+                @Override
+                public void onProviderEnabled(String provider) {
+                    Toast.makeText(getContext(), "Waiting for location",
+                            Toast.LENGTH_SHORT).show();
                 }
 
-                mRestaurant.setLocation(location);
-            }
-        };
+                @Override
+                public void onProviderDisabled(String provider) {
+                    Toast.makeText(getContext(), "Connection Lost",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onLocationChanged(Location location) {
+                    Geocoder geo = new Geocoder(getContext());
+                    List<Address> addresses = null;
+
+                    try {
+                        addresses = geo.getFromLocation(location.getLatitude(),
+                                location.getLongitude(), 10);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (addresses.size() > 0 &&
+                            addresses.get(0).getMaxAddressLineIndex() >= 0) {
+                        mRestaurant.setAddress(addresses.get(0).getAddressLine(0));
+                        mRestaurant.setLocation(location);
+                    }
+
+                    Log.d(TAG, "Restaurant: " + mRestaurant.toString());
+                    lm.removeUpdates(this);
+                    mListener.onStartDashboardFromNL();
+                }
+
+            };
+
+
+
+            mShareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRestaurant.setName(mRestaurantName.getText().toString());
+                    mRestaurant.setCategory(mCategory.getText().toString());
+                    mRestaurant.setDescription(mDescription.getText().toString());
+
+                    Toast.makeText(getContext(), "Waiting for location ...",
+                            Toast.LENGTH_SHORT).show();
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+                }
+            });
 
         return rootView;
     }
@@ -96,17 +133,7 @@ public class NewLocationFragment extends Fragment {
         mAuthenticityLevel = view.findViewById(R.id.ratingBar);
         mShareButton = view.findViewById(R.id.shareButton);
 
-        mShareButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mRestaurant.setName(mRestaurantName.getText().toString());
-                mRestaurant.setCategory(mCategory.getText().toString());
-                mRestaurant.setDescription(mDescription.getText().toString());
-                //TODO: send to Firebase database
 
-                mListener.onStartDashboardFromNL();
-            }
-        });
     }
 
 

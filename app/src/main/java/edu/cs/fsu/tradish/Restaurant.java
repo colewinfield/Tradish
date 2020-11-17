@@ -53,4 +53,16 @@ public class Restaurant {
     public void setLocation(Location location) {
         mLocation = location;
     }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "mName='" + mName + '\'' +
+                ", mDescription='" + mDescription + '\'' +
+                ", mCategory='" + mCategory + '\'' +
+                ", mAddress='" + mAddress + '\'' +
+                ", mReferenceId=" + mReferenceId +
+                ", mLocation=" + mLocation +
+                '}';
+    }
 }
