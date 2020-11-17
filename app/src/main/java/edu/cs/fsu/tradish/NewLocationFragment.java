@@ -42,6 +42,20 @@ public class NewLocationFragment extends Fragment {
     private Restaurant mRestaurant;
     private OnNewLocationListener mListener;
 
+    // ##########################################################################################
+    // # onCreateView: used to initialize the widgets within the UI. Using init(rootView) to    #
+    // # aid with this (just to declutter the method).                                          #
+    // # Checks whether or not the user has granted location permissions for application.       #
+    // # Those using Marshmallow (API 26) or higher need to manually allow it. When this frag   #
+    // # -ment is created, it requests permissions. LocationManager and a LocationListener      #
+    // # are added below to get the location of the person after the submit button is clicked.  #
+    // # Uses the EditTexts to fill out the rest of a Restaurant object that'll be used to      #
+    // # store within the Firebase database. When button is pressed, listener is activated and  #
+    // # then released (to save battery).                                                       #
+    // # TODO: Need to setup Firebase database, perform form completeness check, make the user  #
+    // # TODO: -select a category that is predetermined (Chinese, Italian, Mexican, etc.)..     #
+    // ##########################################################################################
+
 
     @SuppressLint("MissingPermission")
     @Override
@@ -136,6 +150,11 @@ public class NewLocationFragment extends Fragment {
 
     }
 
+    // ##########################################################################################
+    // # Below are methods sed in checking the permissions of the application. It checks if     #
+    // # the user has granted permissions yet, and if they haven't, requests that the user      #
+    // # grants them with a dialog. This is needed for API 26+ (Marshmallow).                   #
+    // ##########################################################################################
 
     private boolean checkIfPermitted() {
         int result = ContextCompat.checkSelfPermission(getContext(), Manifest.permission.GET_ACCOUNTS);
@@ -164,6 +183,10 @@ public class NewLocationFragment extends Fragment {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
+
+    // ##########################################################################################
+    // # Routine listener methods to set up an interaction between MainActivity and fragment.   #
+    // ##########################################################################################
 
     @Override
     public void onAttach(Context context) {

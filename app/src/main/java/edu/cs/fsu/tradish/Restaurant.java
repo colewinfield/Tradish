@@ -2,6 +2,11 @@ package edu.cs.fsu.tradish;
 
 import android.location.Location;
 
+// ##########################################################################################
+// # Object that'll be used to house the information of the newly created food location.    #
+// # It will then be sent to the Firebase database.                                         #
+// ##########################################################################################
+
 public class Restaurant {
     private String mName;
     private String mDescription;

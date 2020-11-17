@@ -10,6 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+// ##########################################################################################
+// # This is a RecyclerView adapter that aids in the use of a RecyclerView. It's the        #
+// # replacement for a ListView. ListViews cause a lot of performance degradation with long #
+// # lists. Use this instead when gathering the search results.                             #
+// ##########################################################################################
+
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private ArrayList<Restaurant> mRestaurants;
 

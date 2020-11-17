@@ -9,6 +9,10 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     LoginFragment.OnLoginListener, MainFragment.OnDashboardListener,
     NewLocationFragment.OnNewLocationListener {
 
+    // ##########################################################################################
+    // # When the activity is created, main() is called. main() does the start-up logic.        #
+    // ##########################################################################################
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,14 +21,12 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         main();
     }
 
-    private void main() {
+    // ##########################################################################################
+    // # Checks if the user has previously logged in or not. If they have, it goes right to     #
+    // # to the dashboard. Else, to the login screen.                                           #
+    // ##########################################################################################
 
-        // ######################################################################
-        // # I DON'T HAVE A MAIN DASHBOARD YET. MACAYLA MIGHT WANT              #
-        // # TO DESIGN THAT PART. FOR NOW, I HAVE A "FAUX" RESULTS              #
-        // # PAGE SHOWING, JUST SO I CAN GET A LOOK AT HOW THE RESULTS PAGE     #
-        // # WILL LOOK.                                                         #
-        // ######################################################################
+    private void main() {
 
         if (isUserLoggedIn()) {
             onStartDashBoard();
@@ -34,6 +36,11 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
 
     }
 
+    // ##########################################################################################
+    // # The below methods are just methods used to create a fragment of some type and then     #
+    // # use the FragmentManager to replace the current fragment with another (when switching   #
+    // # to different screens).                                                                 #
+    // ##########################################################################################
 
     private void onStartMain() {
         MainFragment fragment = new MainFragment();
@@ -63,6 +70,12 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
                 .replace(R.id.fragment_frame, fragment, tag).commit();
     }
 
+    // ##########################################################################################
+    // # These are the required overrides for the implemented interfaces. They're used as call- #
+    // # -backs from fragments to start a new fragment when a button or some event occurs.      #
+    // # Essentially used to communicate with the MainActivity from a child fragment.           #
+    // ##########################################################################################
+
     @Override
     public void onStartLoginFragment() {
         onStartLogin();
@@ -78,11 +91,6 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         onStartMain();
     }
 
-    public boolean isUserLoggedIn() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        return (auth.getCurrentUser() != null);
-    }
-
     @Override
     public void onStartNewLocation() {
         onStartNewLocationFragment();
@@ -91,5 +99,14 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     @Override
     public void onStartDashboardFromNL() {
         onStartDashBoard();
+    }
+
+    // ##########################################################################################
+    // # Uses Firebase to identify if the user has previously logged in or not.                 #
+    // ##########################################################################################
+
+    public boolean isUserLoggedIn() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        return (auth.getCurrentUser() != null);
     }
 }

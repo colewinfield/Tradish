@@ -34,6 +34,12 @@ public class LoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    // ##########################################################################################
+    // # onCreateView: used to initialize the widgets within the UI. Using init(rootView) to    #
+    // # aid with this (just to declutter the method).                                          #
+    // ##########################################################################################
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +48,14 @@ public class LoginFragment extends Fragment {
 
         return rootView;
     }
+
+    // ##########################################################################################
+    // # init(View view) is used to initialize the views. It takes in the view that is inflated #
+    // # from onCreateView. Uses this to findViewById.                                          #
+    // # Also initializes the mRegisterButton and mLoginButton. The registerButton goes to a    #
+    // # register fragment, in case the user has not yet registered. THe loginButton uses       #
+    // # Firebase to check if the user is registered. Also checks if the form is filled out.    #
+    // ##########################################################################################
 
     private void init(View view) {
         mLogin = view.findViewById(R.id.editTextEmailLogin);
@@ -91,6 +105,11 @@ public class LoginFragment extends Fragment {
         });
     }
 
+    // ##########################################################################################
+    // # Used anywhere a listener is needed. A listener is used to communicate with the Main-   #
+    // # -Activity. mListener tells it to call "OnSomething" to start a new fragment.           #
+    // ##########################################################################################
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -103,11 +122,20 @@ public class LoginFragment extends Fragment {
         }
     }
 
+    // ##########################################################################################
+    // # Detach the listener to avoid any memory leaks.                                         #
+    // ##########################################################################################
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
+
+    // ##########################################################################################
+    // # Interface for the Listener. MainActivity implements this interface, so it must have    #
+    // # these methods that create different fragments.                                         #
+    // ##########################################################################################
 
     public interface OnLoginListener {
         void onStartRegisterFragment();
