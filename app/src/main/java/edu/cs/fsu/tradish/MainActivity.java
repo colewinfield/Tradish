@@ -6,7 +6,7 @@ import android.os.Bundle;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener,
-    LoginFragment.OnLoginListener {
+    LoginFragment.OnLoginListener, MainFragment.OnDashboardListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,14 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
 
     private void onStartRegister() {
         RegisterFragment fragment = new RegisterFragment();
-        String tag = MainFragment.class.getCanonicalName();
+        String tag = RegisterFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, fragment, tag).commit();
+    }
+
+    private void onStartNewLocationFragment() {
+        NewLocationFragment fragment = new NewLocationFragment();
+        String tag = NewLocationFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_frame, fragment, tag).commit();
     }
@@ -73,5 +80,10 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     public boolean isUserLoggedIn() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         return (auth.getCurrentUser() != null);
+    }
+
+    @Override
+    public void onStartNewLocation() {
+        onStartNewLocationFragment();
     }
 }

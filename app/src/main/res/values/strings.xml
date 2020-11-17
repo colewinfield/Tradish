@@ -13,4 +13,27 @@
     <string name="signup_button">Sign Up</string>
     <string name="register_text">Register your account</string>
     <string name="already_registered">Already a Tradish foodie? <b>Sign in here!</b></string>
+
+<!--Ethnic Groups-->
+    <string-array name="ethnicities">
+        <item>Brazilian</item>
+        <item>Cajun</item>
+        <item>Canadian</item>
+        <item>Chinese</item>
+        <item>Cuban</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Greek</item>
+        <item>Halal</item>
+        <item>Italian</item>
+        <item>Jamaican</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Kosher</item>
+        <item>Lebanese</item>
+        <item>Mexican</item>
+        <item>Southern BBQ</item>
+        <item>Thai</item>
+        <item>Venezuelan</item>
+    </string-array>
 </resources>
