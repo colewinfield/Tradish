@@ -27,6 +27,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -41,6 +44,8 @@ public class NewLocationFragment extends Fragment {
     private String mAddress;
     private Restaurant mRestaurant;
     private OnNewLocationListener mListener;
+    private FirebaseDatabase mRootNode;
+    private DatabaseReference mDatabaseReference;
 
     // ##########################################################################################
     // # onCreateView: used to initialize the widgets within the UI. Using init(rootView) to    #
@@ -111,6 +116,7 @@ public class NewLocationFragment extends Fragment {
 
                     Log.d(TAG, "Restaurant: " + mRestaurant.toString());
                     lm.removeUpdates(this);
+                    sendToDatabase(mRestaurant);
                     mListener.onStartDashboardFromNL();
                 }
 
@@ -208,6 +214,13 @@ public class NewLocationFragment extends Fragment {
 
     public interface OnNewLocationListener {
         void onStartDashboardFromNL();
+    }
+
+    private void sendToDatabase(Restaurant restaurant) {
+        mRootNode = FirebaseDatabase.getInstance();
+        mDatabaseReference = mRootNode.getReference("Restaurants");
+
+        mDatabaseReference.setValue(restaurant);
     }
 
 }
