@@ -77,59 +77,62 @@ public class NewLocationFragment extends Fragment {
         }
 
 
-            final LocationManager lm = (LocationManager) getContext().getSystemService(
-                    Context.LOCATION_SERVICE);
-            final LocationListener ll = new LocationListener() {
-                @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
+        final LocationManager lm = (LocationManager) getContext().getSystemService(
+                Context.LOCATION_SERVICE);
+        final LocationListener ll = new LocationListener() {
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                Toast.makeText(getContext(), "Waiting for location",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Toast.makeText(getContext(), "Connection Lost",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLocationChanged(Location location) {
+                RestaurantLocation restaurantLocation = new RestaurantLocation();
+                Geocoder geo = new Geocoder(getContext());
+                List<Address> addresses = null;
+
+                try {
+                    addresses = geo.getFromLocation(location.getLatitude(),
+                            location.getLongitude(), 10);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-                @Override
-                public void onProviderEnabled(String provider) {
-                    Toast.makeText(getContext(), "Waiting for location",
-                            Toast.LENGTH_SHORT).show();
+                if (addresses.size() > 0 &&
+                        addresses.get(0).getMaxAddressLineIndex() >= 0) {
+                    mRestaurant.setAddress(addresses.get(0).getAddressLine(0));
+                    restaurantLocation.setLongitude(location.getLongitude());
+                    restaurantLocation.setLatitude(location.getLatitude());
+                    mRestaurant.setLocation(restaurantLocation);
                 }
 
-                @Override
-                public void onProviderDisabled(String provider) {
-                    Toast.makeText(getContext(), "Connection Lost",
-                            Toast.LENGTH_SHORT).show();
-                }
+                Log.d(TAG, "Restaurant: " + mRestaurant.toString());
+                lm.removeUpdates(this);
+                sendToDatabase(mRestaurant);
+                mListener.onStartDashboardFromNL();
+            }
 
-                @Override
-                public void onLocationChanged(Location location) {
-                    RestaurantLocation restaurantLocation = new RestaurantLocation();
-                    Geocoder geo = new Geocoder(getContext());
-                    List<Address> addresses = null;
-
-                    try {
-                        addresses = geo.getFromLocation(location.getLatitude(),
-                                location.getLongitude(), 10);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (addresses.size() > 0 &&
-                            addresses.get(0).getMaxAddressLineIndex() >= 0) {
-                        mRestaurant.setAddress(addresses.get(0).getAddressLine(0));
-                        restaurantLocation.setLongitude(location.getLongitude());
-                        restaurantLocation.setLatitude(location.getLatitude());
-                        mRestaurant.setLocation(restaurantLocation);
-                    }
-
-                    Log.d(TAG, "Restaurant: " + mRestaurant.toString());
-                    lm.removeUpdates(this);
-                    sendToDatabase(mRestaurant);
-                    mListener.onStartDashboardFromNL();
-                }
-
-            };
+        };
 
 
 
-            mShareButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        mShareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                EditText[] tempArray = {mRestaurantName, mCategory, mDescription};
+                if (validateForm(tempArray)&& validateCategory(mCategory)) {
                     mRestaurant.setName(mRestaurantName.getText().toString());
                     mRestaurant.setCategory(mCategory.getText().toString());
                     mRestaurant.setDescription(mDescription.getText().toString());
@@ -138,7 +141,8 @@ public class NewLocationFragment extends Fragment {
                             Toast.LENGTH_SHORT).show();
                     lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
                 }
-            });
+            }
+        });
 
         return rootView;
     }
@@ -176,6 +180,41 @@ public class NewLocationFragment extends Fragment {
                         Manifest.permission.ACCESS_NETWORK_STATE,
                         Manifest.permission.ACCESS_COARSE_LOCATION},
                 101);
+    }
+
+    // ##########################################################################################
+    // # ValidateForm takes in each EditText in the forum and ensures it is filled              #
+    // ##########################################################################################
+    private boolean validateForm(EditText[] array)
+    {
+        boolean flag= true;
+        for (EditText currentField : array) {
+            if (currentField.getText().toString().length() <= 0) {
+                currentField.setError("Cannot be empty");
+                flag=false;
+            }
+        }
+        return flag;
+    }
+
+    // ##########################################################################################
+    // # validateCategory takes in the string in the category editText and compares it to the   #
+    // # strings held in the resources String array. If it matches one it returns true,         #
+    // # otherwise it returns false.                                                            #
+    // ##########################################################################################
+    private boolean validateCategory(EditText mCategory)
+    {
+        String tempInput=mCategory.getText().toString();
+        String[] acceptedString=getResources().getStringArray(R.array.ethnicities);
+        for (String s : acceptedString) {
+            if (s.compareToIgnoreCase(tempInput) == 0)         //returns 0 if they match
+            {
+                return true;
+            }
+        }
+        mCategory.setError("Invalid Category !");
+        Toast.makeText(getActivity(),"Sorry, invalid category !", Toast.LENGTH_SHORT).show();
+        return false;
     }
 
 
