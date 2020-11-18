@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import javax.xml.transform.Result;
+
 public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener,
     LoginFragment.OnLoginListener, MainFragment.OnDashboardListener,
     NewLocationFragment.OnNewLocationListener {
@@ -70,6 +72,13 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
                 .replace(R.id.fragment_frame, fragment, tag).commit();
     }
 
+    private void onStartSearchFragment() {
+        ResultsFragment fragment = new ResultsFragment();
+        String tag = ResultsFragment.class.getCanonicalName();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_frame, fragment, tag).commit();
+    }
+
     // ##########################################################################################
     // # These are the required overrides for the implemented interfaces. They're used as call- #
     // # -backs from fragments to start a new fragment when a button or some event occurs.      #
@@ -94,6 +103,11 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     @Override
     public void onStartNewLocation() {
         onStartNewLocationFragment();
+    }
+
+    @Override
+    public void onStartSearch() {
+        onStartSearchFragment();
     }
 
     @Override

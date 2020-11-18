@@ -54,6 +54,13 @@ public class MainFragment extends Fragment {
                 mListener.onStartNewLocation();
             }
         });
+
+        mSearchFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onStartSearch();
+            }
+        });
     }
 
     // ##########################################################################################
@@ -89,6 +96,7 @@ public class MainFragment extends Fragment {
 
     public interface OnDashboardListener {
         void onStartNewLocation();
+        void onStartSearch();
     }
 
 
