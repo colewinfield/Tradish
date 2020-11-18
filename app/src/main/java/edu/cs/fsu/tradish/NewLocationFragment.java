@@ -220,7 +220,7 @@ public class NewLocationFragment extends Fragment {
         mRootNode = FirebaseDatabase.getInstance();
         mDatabaseReference = mRootNode.getReference("Restaurants");
 
-        mDatabaseReference.setValue(restaurant);
+        mDatabaseReference.push().setValue(mRestaurant);
     }
 
 }
