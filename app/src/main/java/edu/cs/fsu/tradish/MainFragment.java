@@ -8,14 +8,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainFragment extends Fragment {
     private FloatingActionButton mSearchFAB;
     private FloatingActionButton mNewLocationFAB;
     private OnDashboardListener mListener;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+    //private Toolbar toolbar;
 
 
     @Override
@@ -47,7 +52,13 @@ public class MainFragment extends Fragment {
     private void init(View view) {
         mSearchFAB = view.findViewById(R.id.fab_search_main);
         mNewLocationFAB = view.findViewById(R.id.fab_new_location_main);
-
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        navigationView = view.findViewById(R.id.nav_view);
+        //toolbar = view.findViewById(R.id.toolbar);
+        // setSupportActionBar(toolbar);
+        // ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_nav, R.string.close_nav);
+        //drawerLayout.addDrawerListener(toggle);
+        //toggle.syncState();
         mNewLocationFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

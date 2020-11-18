@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/home_icon"
+            android:title="Home" />
+        <item
+            android:id="@+id/nav_locations"
+            android:icon="@drawable/home_icon"
+            android:title="Locations" />
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/home_icon"
+            android:title="Map" />
+
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item android:title="Account">
+
+        <menu>
+            <item
+                android:id="@+id/nav_viewAccount"
+                android:icon="@drawable/home_icon"
+                android:title="View Profile" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/home_icon"
+                android:title="Account Settings" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/home_icon"
+                android:title="Logout" />
+        </menu>
+        </item>
+    </group>
+
+    <item android:title="Help">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:title="About Tradish"
+                android:icon="@drawable/home_icon"/>
+            <item
+                android:id="@+id/nav_rateUs"
+                android:title="Rate Us"
+                android:icon="@drawable/home_icon"/>
+            <item
+                android:id="@+id/nav_reportIssue"
+                android:title="Report An Issue"
+                android:icon="@drawable/home_icon"/>
+
+        </menu>
+
+    </item>
+</menu>
