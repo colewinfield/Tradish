@@ -87,7 +87,7 @@ public class ResultsFragment extends Fragment {
 
         return rootView;
     }
-    
+
 
     private void search(String text) {
         ArrayList<Restaurant> restaurants = new ArrayList<>();
