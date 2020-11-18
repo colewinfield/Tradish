@@ -3,12 +3,12 @@ package edu.cs.fsu.tradish;
 import android.location.Location;
 
 public class RestaurantLocation {
-    private static double mLatitude;
-    private static double mLongitude;
+    private double mLatitude;
+    private double mLongitude;
 
     public RestaurantLocation() {}
 
-    public static Location getLocation() {
+    public Location getLocation() {
         Location newLocation = new Location("restaurant location");
         newLocation.setLatitude(mLatitude);
         newLocation.setLongitude(mLongitude);
@@ -16,21 +16,21 @@ public class RestaurantLocation {
         return newLocation;
     }
 
-    public static double getLatitude() {
+    public double getLatitude() {
         return mLatitude;
     }
 
-    public static double getLongitude() {
+    public double getLongitude() {
         return mLongitude;
     }
 
-    public static void setLatitude(double mLatitude) {
-        RestaurantLocation.mLatitude = mLatitude;
+    public void setLatitude(double latitude) {
+        mLatitude = latitude;
     }
 
-    public static void setLongitude(double mLongitude) {
-        RestaurantLocation.mLongitude = mLongitude;
+    public void setLongitude(double longitude) {
+        mLongitude = longitude;
     }
 
-    
+
 }

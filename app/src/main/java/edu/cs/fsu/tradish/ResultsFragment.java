@@ -70,51 +70,24 @@ public class ResultsFragment extends Fragment {
             }
         });
 
+        if (mSearchView != null) {
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    search(newText);
+                    return true;
+                }
+            });
+        }
+
         return rootView;
     }
-
-
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        if (mFirebaseReference != null) {
-//            mFirebaseReference.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.exists()) {
-//                        mRestaurants = new ArrayList<>();
-//
-//                        for (DataSnapshot item : snapshot.getChildren()) {
-//                            mRestaurants.add(item.getValue(Restaurant.class));
-//                        }
-//
-//                        mAdapter = new RestaurantAdapter(mRestaurants);
-//                        mRecyclerView.setAdapter(mAdapter);
-//                    }
-//                }
-//
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//
-//        if (mSearchView != null) {
-//            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//                @Override
-//                public boolean onQueryTextSubmit(String query) {
-//                    return false;
-//                }
-//
-//                @Override
-//                public boolean onQueryTextChange(String newText) {
-//                    search(newText);
-//                    return true;
-//                }
-//            });
-//        }
-//    }
+    
 
     private void search(String text) {
         ArrayList<Restaurant> restaurants = new ArrayList<>();

@@ -13,7 +13,7 @@ public class Restaurant {
     private String mCategory;
     private String mAddress;
     private int mReferenceId;
-    private Location mLocation;
+    private RestaurantLocation mLocation;
 
     public Restaurant() {
         // TODO: get a referenceID method, random number
@@ -31,7 +31,7 @@ public class Restaurant {
         return mReferenceId;
     }
 
-    public Location getLocation() {
+    public RestaurantLocation getLocation() {
         return mLocation;
     }
 
@@ -55,7 +55,7 @@ public class Restaurant {
         mAddress = address;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(RestaurantLocation location) {
         mLocation = location;
     }
 

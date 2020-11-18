@@ -98,6 +98,7 @@ public class NewLocationFragment extends Fragment {
 
                 @Override
                 public void onLocationChanged(Location location) {
+                    RestaurantLocation restaurantLocation = new RestaurantLocation();
                     Geocoder geo = new Geocoder(getContext());
                     List<Address> addresses = null;
 
@@ -111,7 +112,9 @@ public class NewLocationFragment extends Fragment {
                     if (addresses.size() > 0 &&
                             addresses.get(0).getMaxAddressLineIndex() >= 0) {
                         mRestaurant.setAddress(addresses.get(0).getAddressLine(0));
-                        mRestaurant.setLocation(location);
+                        restaurantLocation.setLongitude(location.getLongitude());
+                        restaurantLocation.setLatitude(location.getLatitude());
+                        mRestaurant.setLocation(restaurantLocation);
                     }
 
                     Log.d(TAG, "Restaurant: " + mRestaurant.toString());
