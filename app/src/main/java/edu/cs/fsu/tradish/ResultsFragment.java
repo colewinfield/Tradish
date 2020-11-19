@@ -1,6 +1,5 @@
 package edu.cs.fsu.tradish;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class ResultsFragment extends Fragment {
@@ -47,6 +44,7 @@ public class ResultsFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mSearchView = rootView.findViewById(R.id.searchView);
 
         mRestaurants = new ArrayList<>();
 
