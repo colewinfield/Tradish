@@ -8,11 +8,11 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_locations"
-            android:icon="@drawable/home_icon"
+            android:icon="@drawable/browse_icon"
             android:title="Locations" />
         <item
             android:id="@+id/nav_map"
-            android:icon="@drawable/home_icon"
+            android:icon="@drawable/ic_pinpoint"
             android:title="Map" />
 
     </group>
@@ -23,15 +23,15 @@
         <menu>
             <item
                 android:id="@+id/nav_viewAccount"
-                android:icon="@drawable/home_icon"
+                android:icon="@drawable/profile_icon"
                 android:title="View Profile" />
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/home_icon"
+                android:icon="@drawable/ic_baseline_settings_24"
                 android:title="Account Settings" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/home_icon"
+                android:icon="@drawable/ic_logout"
                 android:title="Logout" />
         </menu>
         </item>
@@ -46,11 +46,11 @@
             <item
                 android:id="@+id/nav_rateUs"
                 android:title="Rate Us"
-                android:icon="@drawable/home_icon"/>
+                android:icon="@drawable/ic_baseline_star_half_24"/>
             <item
                 android:id="@+id/nav_reportIssue"
                 android:title="Report An Issue"
-                android:icon="@drawable/home_icon"/>
+                android:icon="@drawable/alert_icon"/>
 
         </menu>
 
