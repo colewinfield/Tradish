@@ -39,8 +39,8 @@
             android:id="@+id/fab_search_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="#FFF"
-            app:fab_colorPressed="@color/colorPrimary"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorPrimaryDark"
             app:fab_title="Search Tradish places"
             app:fab_icon="@drawable/fab_search"
             app:fabSize="normal"/>
@@ -49,8 +49,8 @@
             android:id="@+id/fab_new_location_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="#FFF"
-            app:fab_colorPressed="@color/colorPrimary"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorPrimaryDark"
             app:fab_title="Add Tradish spot"
             app:fab_icon="@drawable/fab_add_location"
             app:fabSize="normal"/>
