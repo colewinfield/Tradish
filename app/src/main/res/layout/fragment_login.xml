@@ -7,17 +7,6 @@
     android:padding="40dp">
 
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/editTextEmailLogin"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:hint="email"-->
-    <!--        android:inputType="textEmailAddress"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/editTextPasswordLogin"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent" />-->
-
     <TextView
         android:id="@+id/loginTextView"
         style="@style/TextAppearance.MaterialComponents.Headline5"

@@ -27,8 +27,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.PropertyName;
 
 import java.io.IOException;
 import java.util.List;
@@ -80,6 +84,10 @@ public class NewLocationFragment extends Fragment {
         final LocationManager lm = (LocationManager) getContext().getSystemService(
                 Context.LOCATION_SERVICE);
         final LocationListener ll = new LocationListener() {
+
+            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("GeoFire");
+            GeoFire geoFire = new GeoFire(reference);
+
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
             }
@@ -115,6 +123,19 @@ public class NewLocationFragment extends Fragment {
                     restaurantLocation.setLongitude(location.getLongitude());
                     restaurantLocation.setLatitude(location.getLatitude());
                     mRestaurant.setLocation(restaurantLocation);
+
+                    geoFire.setLocation(mRestaurant.getReferenceId(),
+                            new GeoLocation(location.getLatitude(), location.getLongitude()),
+                            new GeoFire.CompletionListener() {
+                                @Override
+                                public void onComplete(String key, DatabaseError error) {
+                                    if (error != null) {
+                                        Toast.makeText(getContext(),
+                                                "There was an error saving the location " +
+                                                        "to GeoFire", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
 
                 Log.d(TAG, "Restaurant: " + mRestaurant.toString());
@@ -126,13 +147,11 @@ public class NewLocationFragment extends Fragment {
         };
 
 
-
         mShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 EditText[] tempArray = {mRestaurantName, mCategory, mDescription};
-                if (validateForm(tempArray)&& validateCategory(mCategory)) {
+                if (validateForm(tempArray) && validateCategory(mCategory)) {
                     mRestaurant.setName(mRestaurantName.getText().toString());
                     mRestaurant.setCategory(mCategory.getText().toString());
                     mRestaurant.setDescription(mDescription.getText().toString());
@@ -185,13 +204,12 @@ public class NewLocationFragment extends Fragment {
     // ##########################################################################################
     // # ValidateForm takes in each EditText in the forum and ensures it is filled              #
     // ##########################################################################################
-    private boolean validateForm(EditText[] array)
-    {
-        boolean flag= true;
+    private boolean validateForm(EditText[] array) {
+        boolean flag = true;
         for (EditText currentField : array) {
             if (currentField.getText().toString().length() <= 0) {
                 currentField.setError("Cannot be empty");
-                flag=false;
+                flag = false;
             }
         }
         return flag;
@@ -202,10 +220,9 @@ public class NewLocationFragment extends Fragment {
     // # strings held in the resources String array. If it matches one it returns true,         #
     // # otherwise it returns false.                                                            #
     // ##########################################################################################
-    private boolean validateCategory(EditText mCategory)
-    {
-        String tempInput=mCategory.getText().toString();
-        String[] acceptedString=getResources().getStringArray(R.array.ethnicities);
+    private boolean validateCategory(EditText mCategory) {
+        String tempInput = mCategory.getText().toString();
+        String[] acceptedString = getResources().getStringArray(R.array.ethnicities);
         for (String s : acceptedString) {
             if (s.compareToIgnoreCase(tempInput) == 0)         //returns 0 if they match
             {
@@ -213,7 +230,7 @@ public class NewLocationFragment extends Fragment {
             }
         }
         mCategory.setError("Invalid Category !");
-        Toast.makeText(getActivity(),"Sorry, invalid category !", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Sorry, invalid category !", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -262,7 +279,9 @@ public class NewLocationFragment extends Fragment {
         mRootNode = FirebaseDatabase.getInstance();
         mDatabaseReference = mRootNode.getReference("Restaurants");
 
-        mDatabaseReference.push().setValue(mRestaurant);
+
+//        mDatabaseReference.push().setValue(mRestaurant);
+        mDatabaseReference.child(restaurant.getReferenceId()).setValue(restaurant);
     }
 
 }

@@ -1,6 +1,7 @@
 package edu.cs.fsu.tradish;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.geofire.GeoLocation;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import static android.content.ContentValues.TAG;
 
 
 public class ResultsFragment extends Fragment {
@@ -29,6 +33,7 @@ public class ResultsFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference mFirebaseReference;
     private ArrayList<Restaurant> mRestaurants;
+    private GeoLocation mGeoLocation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +50,19 @@ public class ResultsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mSearchView = rootView.findViewById(R.id.searchView);
+
+        Bundle extras = getArguments();
+
+        if (extras != null) {
+            double latitude = extras.getDouble(MainActivity.EXTRA_LATITUDE);
+            double longitude = extras.getDouble(MainActivity.EXTRA_LONGITUDE);
+
+            mGeoLocation = new GeoLocation(latitude, longitude);
+
+            Log.d(TAG, "Checking GeoLocation of user in ResultsFragment: " +
+                    "Latitude: " + latitude + ", Longitude: " + longitude);
+        }
+
 
         mRestaurants = new ArrayList<>();
 

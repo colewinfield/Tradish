@@ -2,6 +2,8 @@ package edu.cs.fsu.tradish;
 
 import android.location.Location;
 
+import java.util.UUID;
+
 // ##########################################################################################
 // # Object that'll be used to house the information of the newly created food location.    #
 // # It will then be sent to the Firebase database.                                         #
@@ -12,11 +14,12 @@ public class Restaurant {
     private String mDescription;
     private String mCategory;
     private String mAddress;
-    private int mReferenceId;
+    private String mReferenceId;
     private RestaurantLocation mLocation;
 
     public Restaurant() {
         // TODO: get a referenceID method, random number
+        mReferenceId = UUID.randomUUID().toString();
     }
 
     public String getName() {
@@ -27,7 +30,7 @@ public class Restaurant {
         return mDescription;
     }
 
-    public int getReferenceId() {
+    public String getReferenceId() {
         return mReferenceId;
     }
 

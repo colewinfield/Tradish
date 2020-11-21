@@ -1,18 +1,32 @@
 package edu.cs.fsu.tradish;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.firebase.geofire.GeoLocation;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import java.io.IOException;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class MainFragment extends Fragment {
     private FloatingActionButton mSearchFAB;
@@ -20,6 +34,7 @@ public class MainFragment extends Fragment {
     private OnDashboardListener mListener;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
+    private double longitude, latitude;
     //private Toolbar toolbar;
 
 
@@ -40,6 +55,47 @@ public class MainFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         init(rootView);
+
+        final LocationManager lm = (LocationManager) getContext().getSystemService(
+                Context.LOCATION_SERVICE);
+        final LocationListener ll = new LocationListener() {
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Toast.makeText(getContext(), "Connection Lost",
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLocationChanged(Location location) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+
+                Log.d(TAG, "Latitude: " + latitude + ", Longitude: " + longitude);
+                lm.removeUpdates(this);
+            }
+
+        };
+
+        mSearchFAB.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "mSearchFAB Latitude: " + latitude + ", Longitude: " + longitude);
+
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
+                mListener.onStartSearch(latitude, longitude);
+            }
+        });
+
         return rootView;
     }
 
@@ -66,12 +122,7 @@ public class MainFragment extends Fragment {
             }
         });
 
-        mSearchFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.onStartSearch();
-            }
-        });
+
     }
 
     // ##########################################################################################
@@ -107,7 +158,7 @@ public class MainFragment extends Fragment {
 
     public interface OnDashboardListener {
         void onStartNewLocation();
-        void onStartSearch();
+        void onStartSearch(double latitude, double longitude);
     }
 
 
