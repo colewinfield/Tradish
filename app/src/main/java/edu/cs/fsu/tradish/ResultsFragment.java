@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Struct;
 import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
@@ -72,7 +73,7 @@ public class ResultsFragment extends Fragment {
 
         mRestaurants = new ArrayList<>();
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoFire");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoFire");
         GeoFire geoFire = new GeoFire(ref);
 
         if (mGeoLocation != null) {
@@ -80,16 +81,18 @@ public class ResultsFragment extends Fragment {
             geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
                 @Override
                 public void onKeyEntered(String key, GeoLocation location) {
-                    mFirebaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
-                    mFirebaseReference.addValueEventListener(new ValueEventListener() {
+                    FirebaseDatabase.getInstance().getReference("Restaurants").child(key)
+                            .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot item : snapshot.getChildren()) {
-                                Restaurant restaurant = item.getValue(Restaurant.class);
-                                mRestaurants.add(restaurant);
-                            }
+                            Log.d(TAG, "onDataChange: Checking if entered.");
 
+
+                            String name = snapshot.child("name").getValue(String.class);
+                            Log.d(TAG, "onDataChange name: " + name);
+                            Restaurant restaurant = snapshot.getValue(Restaurant.class);
+                            mRestaurants.add(restaurant);
                             mAdapter = new RestaurantAdapter(mRestaurants);
                             mRecyclerView.setAdapter(mAdapter);
                         }
@@ -121,6 +124,8 @@ public class ResultsFragment extends Fragment {
 
                 }
             });
+
+
         }
 
         if (mSearchView != null) {
