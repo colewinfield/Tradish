@@ -14,11 +14,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -27,6 +31,9 @@ import static android.content.ContentValues.TAG;
 
 
 public class ResultsFragment extends Fragment {
+
+    public static int DISTANCE_RADIUS_DEFAULT = 10;
+
     private SearchView mSearchView;
     private RecyclerView mRecyclerView;
     private RestaurantAdapter mAdapter;
@@ -63,28 +70,58 @@ public class ResultsFragment extends Fragment {
                     "Latitude: " + latitude + ", Longitude: " + longitude);
         }
 
-
         mRestaurants = new ArrayList<>();
 
-        mFirebaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("GeoFire");
+        GeoFire geoFire = new GeoFire(ref);
 
-        mFirebaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot item : snapshot.getChildren()) {
-                    Restaurant restaurant = item.getValue(Restaurant.class);
-                    mRestaurants.add(restaurant);
+        if (mGeoLocation != null) {
+            GeoQuery geoQuery = geoFire.queryAtLocation(mGeoLocation, DISTANCE_RADIUS_DEFAULT);
+            geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+                @Override
+                public void onKeyEntered(String key, GeoLocation location) {
+                    mFirebaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+                    mFirebaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot item : snapshot.getChildren()) {
+                                Restaurant restaurant = item.getValue(Restaurant.class);
+                                mRestaurants.add(restaurant);
+                            }
+
+                            mAdapter = new RestaurantAdapter(mRestaurants);
+                            mRecyclerView.setAdapter(mAdapter);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
-                mAdapter = new RestaurantAdapter(mRestaurants);
-                mRecyclerView.setAdapter(mAdapter);
-            }
+                @Override
+                public void onKeyExited(String key) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                }
+
+                @Override
+                public void onKeyMoved(String key, GeoLocation location) {
+
+                }
+
+                @Override
+                public void onGeoQueryReady() {
+
+                }
+
+                @Override
+                public void onGeoQueryError(DatabaseError error) {
+
+                }
+            });
+        }
 
         if (mSearchView != null) {
             mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -103,7 +140,6 @@ public class ResultsFragment extends Fragment {
 
         return rootView;
     }
-
 
     private void search(String text) {
         ArrayList<Restaurant> restaurants = new ArrayList<>();

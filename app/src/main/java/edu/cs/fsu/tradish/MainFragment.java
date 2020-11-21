@@ -34,7 +34,7 @@ public class MainFragment extends Fragment {
     private OnDashboardListener mListener;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-    private double longitude, latitude;
+    private double mLongitude, mLatitude;
     //private Toolbar toolbar;
 
 
@@ -76,11 +76,12 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onLocationChanged(Location location) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+                mLatitude = location.getLatitude();
+                mLongitude = location.getLongitude();
 
-                Log.d(TAG, "Latitude: " + latitude + ", Longitude: " + longitude);
+                Log.d(TAG, "Latitude: " + mLatitude + ", Longitude: " + mLongitude);
                 lm.removeUpdates(this);
+                mListener.onStartSearch(mLatitude, mLongitude);
             }
 
         };
@@ -89,10 +90,7 @@ public class MainFragment extends Fragment {
             @SuppressLint("MissingPermission")
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "mSearchFAB Latitude: " + latitude + ", Longitude: " + longitude);
-
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, ll);
-                mListener.onStartSearch(latitude, longitude);
             }
         });
 
