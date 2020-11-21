@@ -92,7 +92,9 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         NewLocationFragment fragment = new NewLocationFragment();
         String tag = NewLocationFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_frame, fragment, tag).commit();
+                .replace(R.id.fragment_frame, fragment, tag)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void onStartSearchFragment(double latitude, double longitude) {
@@ -108,7 +110,9 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
 
         String tag = ResultsFragment.class.getCanonicalName();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_frame, fragment, tag).commit();
+                .replace(R.id.fragment_frame, fragment, tag)
+                .addToBackStack(null)
+                .commit();
     }
 
     // ##########################################################################################
