@@ -1,61 +1,118 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/nav_view"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/dashboard_menu"
-        android:layout_gravity="start"/>
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/drawer_layout"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:fitsSystemWindows="true"-->
+<!--    tools:openDrawer="start">-->
+
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/nav_view"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:headerLayout="@layout/header"-->
+<!--        app:menu="@menu/dashboard_menu" />-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/fab_expand_menu_button_main"
-        android:layout_width="wrap_content"
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/fab_expand_menu_button_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_addButtonColorNormal="@color/colorPrimaryDark"
+            app:fab_addButtonColorPressed="@color/colorPrimary"
+            app:fab_expandDirection="up"
+            app:fab_labelStyle="@style/LabelStyle"
+            app:fab_labelsPosition="left"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.913"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.972">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_search_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="normal"
+                app:fab_colorNormal="@color/colorPrimary"
+                app:fab_colorPressed="@color/colorPrimaryDark"
+                app:fab_icon="@drawable/fab_search"
+                app:fab_title="Search Tradish places" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_new_location_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fabSize="normal"
+                app:fab_colorNormal="@color/colorPrimary"
+                app:fab_colorPressed="@color/colorPrimaryDark"
+                app:fab_icon="@drawable/fab_add_location"
+                app:fab_title="Add Tradish spot" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:fab_expandDirection="up"
-        app:fab_labelStyle="@style/LabelStyle"
-        app:fab_labelsPosition="left"
-        app:fab_addButtonColorNormal="@color/colorPrimaryDark"
-        app:fab_addButtonColorPressed="@color/colorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972">
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/superLightTeal">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_search_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"
-            app:fab_title="Search Tradish places"
-            app:fab_icon="@drawable/fab_search"
-            app:fabSize="normal"/>
+        <LinearLayout
+            android:id="@+id/foundSpotsLinear"
+            android:layout_width="170dp"
+            android:layout_height="280dp"
+            android:background="@color/colorLight"
+            android:layout_margin="10dp"
+            android:padding="4dp"
+            android:orientation="vertical">
 
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_new_location_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/colorPrimary"
-            app:fab_colorPressed="@color/colorPrimaryDark"
-            app:fab_title="Add Tradish spot"
-            app:fab_icon="@drawable/fab_add_location"
-            app:fabSize="normal"/>
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="71dp"
+                android:src="@drawable/tradish_icon" />
 
-    </com.getbase.floatingactionbutton.FloatingActionsMenu>
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.drawerlayout.widget.DrawerLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="Found Spots"
+                style="@style/TextAppearance.MaterialComponents.Headline4"/>
+
+            <TextView
+                android:layout_marginTop="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="These are all of the Tradish spots you've found. Hungry foodies thank you."
+                style="@style/TextAppearance.MaterialComponents.Body2"/>
+
+            
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dashboardRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_toRightOf="@id/foundSpotsLinear"
+            android:background="@color/cardview_light_background"/>
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--</androidx.drawerlayout.widget.DrawerLayout>-->
