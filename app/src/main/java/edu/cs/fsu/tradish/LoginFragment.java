@@ -2,6 +2,7 @@ package edu.cs.fsu.tradish;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import static android.content.ContentValues.TAG;
 
 
 public class LoginFragment extends Fragment {
@@ -96,6 +99,8 @@ public class LoginFragment extends Fragment {
                                                 Toast.makeText(getContext(), "Login error, try again",
                                                         Toast.LENGTH_SHORT).show();
                                             } else {
+                                                Log.d(TAG, "onComplete: USERNAME: " + mFirebaseAuth.getUid());
+                                                MainActivity.sCurrentUser.setUsername(mFirebaseAuth.getUid());
                                                 mListener.onStartDashBoard();
                                             }
                                         }
