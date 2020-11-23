@@ -16,6 +16,7 @@ public class Restaurant {
     private String mAddress;
     private String mReferenceId;
     private RestaurantLocation mLocation;
+    private double mAuthenticityRating;
 
     public Restaurant() {
         // TODO: get a referenceID method, random number
@@ -60,6 +61,14 @@ public class Restaurant {
 
     public void setLocation(RestaurantLocation location) {
         mLocation = location;
+    }
+
+    public double getAuthenticityRating() {
+        return mAuthenticityRating;
+    }
+
+    public void setAuthenticityRating(double authenticityRating) {
+        mAuthenticityRating = authenticityRating;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
         public TextView mNameView;
         public TextView mDescriptionView;
-        public TextView mDistanceView;
+        public TextView mAuthenticityView;
         public TextView mFoodCategoryView;
 
         public RestaurantViewHolder(@NonNull View itemView) {
@@ -30,6 +30,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             mNameView = itemView.findViewById(R.id.nameOfRestaurantResult);
             mDescriptionView = itemView.findViewById(R.id.descriptionOfRestaurantResult);
             mFoodCategoryView = itemView.findViewById(R.id.categoryOfRestaurantResult);
+            mAuthenticityView = itemView.findViewById(R.id.authenticityLevel);
         }
     }
 
@@ -52,6 +53,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mNameView.setText(currentRestaurant.getName());
         holder.mFoodCategoryView.setText(currentRestaurant.getCategory());
         holder.mDescriptionView.setText(currentRestaurant.getDescription());
+        holder.mAuthenticityView.setText("Authenticity of " + currentRestaurant.getAuthenticityRating());
     }
 
     @Override
