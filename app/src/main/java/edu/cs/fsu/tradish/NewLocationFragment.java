@@ -156,6 +156,7 @@ public class NewLocationFragment extends Fragment {
                     mRestaurant.setCategory(mCategory.getText().toString());
                     mRestaurant.setDescription(mDescription.getText().toString());
                     mRestaurant.setAuthenticityRating(mAuthenticityLevel.getRating());
+                    mRestaurant.setCreator(MainActivity.sCurrentUser);
 
                     Toast.makeText(getContext(), "Waiting for location ...",
                             Toast.LENGTH_SHORT).show();

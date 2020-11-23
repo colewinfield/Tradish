@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.firebase.geofire.GeoLocation;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import javax.xml.transform.Result;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
 
     public static final String EXTRA_LATITUDE = "latitude";
     public static final String EXTRA_LONGITUDE = "LONGITUDE";
+    public static User sCurrentUser = new User();
 
 
     // ##########################################################################################
@@ -54,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     private void main() {
 
         if (isUserLoggedIn()) {
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            sCurrentUser.setUsername(auth.getUid());
+            Log.d(TAG, "main: USERNAME: " + auth.getUid());
             onStartDashBoard();
         } else {
             onStartLogin();

@@ -15,12 +15,15 @@ public class Restaurant {
     private String mCategory;
     private String mAddress;
     private String mReferenceId;
+    private User mCreator;
     private RestaurantLocation mLocation;
     private double mAuthenticityRating;
+
 
     public Restaurant() {
         // TODO: get a referenceID method, random number
         mReferenceId = UUID.randomUUID().toString();
+        mCreator = MainActivity.sCurrentUser;
     }
 
     public String getName() {
@@ -69,6 +72,14 @@ public class Restaurant {
 
     public void setAuthenticityRating(double authenticityRating) {
         mAuthenticityRating = authenticityRating;
+    }
+
+    public User getCreator() {
+        return mCreator;
+    }
+
+    public void setCreator(User creator) {
+        mCreator = creator;
     }
 
     @Override
