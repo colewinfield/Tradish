@@ -18,8 +18,7 @@
             tools:text="Name of Restaurant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
             android:textColor="@android:color/black"/>
 
 
@@ -28,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/descriptionOfRestaurantResult"
-            android:textSize="15dp"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:textStyle="bold"
             android:layout_marginBottom="12dp"
             tools:text="Category" />
@@ -37,8 +36,8 @@
             android:id="@+id/descriptionOfRestaurantResult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
             android:layout_below="@id/nameOfRestaurantResult"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_marginBottom="8dp"
             tools:text="@string/lipsum" />
 
@@ -49,7 +48,7 @@
             android:layout_below="@id/descriptionOfRestaurantResult"
             android:layout_marginStart="2dp"
             android:layout_marginTop="24dp"
-            android:textSize="12sp"
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             tools:text="Authenticity: 4.3 Stars" />
 
 
