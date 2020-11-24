@@ -1,10 +1,17 @@
 package edu.cs.fsu.tradish;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +50,11 @@ public class ResultsFragment extends Fragment {
     private ArrayList<Restaurant> mRestaurants;
     private GeoLocation mGeoLocation;
 
+    private Dialog mDialog;
+    private TextView mDialogName;
+    private TextView mDialogCategory;
+    private Button mDialogNavigate;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +70,8 @@ public class ResultsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
         mSearchView = rootView.findViewById(R.id.searchView);
+
+        initDialog();
 
         Bundle extras = getArguments();
 
@@ -100,7 +114,27 @@ public class ResultsFragment extends Fragment {
                                 @Override
                                 public void onItemClick(int position) {
                                     mRestaurants.get(position);
+                                    Log.d(TAG, "Test Click: " + mRestaurants.get(position));
+                                    Restaurant restaurant = mRestaurants.get(position);
+                                    final RestaurantLocation location = restaurant.getLocation();
 
+                                    mDialogName.setText(restaurant.getName());
+                                    mDialogCategory.setText(restaurant.getCategory());
+                                    mDialogNavigate.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent = new Intent(Intent.ACTION_VIEW,
+                                                    Uri.parse("google.navigation:q="
+                                                            + location.getLatitude()
+                                                            + ","
+                                                            + location.getLongitude())
+                                            );
+                                            intent.setPackage("com.google.android.apps.maps");
+                                            startActivity(intent);
+
+                                        }
+                                    });
+                                    mDialog.show();
                                     // TODO: Finish after mainFragment
                                 }
                             });
@@ -171,6 +205,16 @@ public class ResultsFragment extends Fragment {
 
         RestaurantAdapter adapter = new RestaurantAdapter(restaurants);
         mRecyclerView.setAdapter(adapter);
+    }
+
+    public void initDialog() {
+        mDialog = new Dialog(getContext());
+        mDialog.setContentView(R.layout.dialog_restaurant);
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        mDialogName = mDialog.findViewById(R.id.dialog_restaurant_name);
+        mDialogCategory = mDialog.findViewById(R.id.dialog_restaurant_category);
+        mDialogNavigate = mDialog.findViewById(R.id.dialog_navigation_button);
     }
 
 }

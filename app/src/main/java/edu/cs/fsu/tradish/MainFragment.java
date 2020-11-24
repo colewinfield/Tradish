@@ -3,6 +3,7 @@ package edu.cs.fsu.tradish;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
@@ -10,6 +11,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -167,9 +169,24 @@ public class MainFragment extends Fragment {
                         public void onItemClick(int position) {
                             Log.d(TAG, "Test Click: " + mRestaurants.get(position));
                             Restaurant restaurant = mRestaurants.get(position);
+                            final RestaurantLocation location = restaurant.getLocation();
 
                             mDialogName.setText(restaurant.getName());
                             mDialogCategory.setText(restaurant.getCategory());
+                            mDialogNavigate.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                                            Uri.parse("google.navigation:q="
+                                                    + location.getLatitude()
+                                                    + ","
+                                                    + location.getLongitude())
+                                    );
+                                    intent.setPackage("com.google.android.apps.maps");
+                                    startActivity(intent);
+
+                                }
+                            });
                             mDialog.show();
                         }
                     });
@@ -181,7 +198,6 @@ public class MainFragment extends Fragment {
                 Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
 //        drawerLayout = view.findViewById(R.id.drawer_layout);
@@ -246,6 +262,7 @@ public class MainFragment extends Fragment {
 
     public interface OnDashboardListener {
         void onStartNewLocation();
+
         void onStartSearch(double latitude, double longitude);
     }
 
