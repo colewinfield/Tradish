@@ -16,91 +16,48 @@
 <!--        app:headerLayout="@layout/header"-->
 <!--        app:menu="@menu/dashboard_menu" />-->
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/fab_expand_menu_button_main"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_addButtonColorNormal="@color/colorPrimaryDark"
-            app:fab_addButtonColorPressed="@color/colorPrimary"
-            app:fab_expandDirection="up"
-            app:fab_labelStyle="@style/LabelStyle"
-            app:fab_labelsPosition="left"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.913"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.972">
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_search_main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fabSize="normal"
-                app:fab_colorNormal="@color/colorPrimary"
-                app:fab_colorPressed="@color/colorPrimaryDark"
-                app:fab_icon="@drawable/fab_search"
-                app:fab_title="Search Tradish places" />
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_new_location_main"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fabSize="normal"
-                app:fab_colorNormal="@color/colorPrimary"
-                app:fab_colorPressed="@color/colorPrimaryDark"
-                app:fab_icon="@drawable/fab_add_location"
-                app:fab_title="Add Tradish spot" />
-
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"
+        android:layout_height="200dp"
         android:layout_marginLeft="20dp"
-        android:background="@color/superLightTeal">
+        android:background="@color/superLightTeal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <LinearLayout
+            android:gravity="center_vertical"
             android:id="@+id/foundSpotsLinear"
             android:layout_width="170dp"
             android:layout_height="280dp"
-            android:background="@color/colorLight"
             android:layout_margin="10dp"
-            android:padding="4dp"
-            android:orientation="vertical">
+            android:background="@color/colorLight"
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <ImageView
-                android:layout_width="64dp"
-                android:layout_height="71dp"
+                android:layout_width="58dp"
+                android:layout_height="95dp"
                 android:src="@drawable/tradish_icon" />
 
 
             <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
                 android:text="Found Spots"
-                style="@style/TextAppearance.MaterialComponents.Headline4"/>
+                android:textStyle="bold" />
 
-            <TextView
-                android:layout_marginTop="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="These are all of the Tradish spots you've found. Hungry foodies thank you."
-                style="@style/TextAppearance.MaterialComponents.Body2"/>
 
-            
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -108,11 +65,64 @@
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:layout_toRightOf="@id/foundSpotsLinear"
-            android:background="@color/cardview_light_background"/>
+            android:background="@color/cardview_light_background" />
 
     </RelativeLayout>
 
 
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab_expand_menu_button_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_addButtonColorNormal="@color/colorPrimaryDark"
+        app:fab_addButtonColorPressed="@color/colorPrimary"
+        app:fab_expandDirection="up"
+        app:fab_labelStyle="@style/LabelStyle"
+        app:fab_labelsPosition="left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.972">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_search_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorPrimaryDark"
+            app:fab_icon="@drawable/fab_search"
+            app:fab_title="Search Tradish places" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_new_location_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            app:fab_colorNormal="@color/colorPrimary"
+            app:fab_colorPressed="@color/colorPrimaryDark"
+            app:fab_icon="@drawable/fab_add_location"
+            app:fab_title="Add Tradish spot" />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="10dp"
+        android:text="YOUR CONTRIBUTIONS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--</androidx.drawerlayout.widget.DrawerLayout>-->
+
+    <!--</androidx.drawerlayout.widget.DrawerLayout>-->
