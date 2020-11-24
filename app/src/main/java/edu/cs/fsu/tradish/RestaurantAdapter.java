@@ -1,5 +1,6 @@
 package edu.cs.fsu.tradish;
 
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,16 @@ import java.util.ArrayList;
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private ArrayList<Restaurant> mRestaurants;
+    private Dialog mDialog;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder {
         public TextView mNameView;
@@ -25,12 +36,24 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         public TextView mAuthenticityView;
         public TextView mFoodCategoryView;
 
-        public RestaurantViewHolder(@NonNull View itemView) {
+        public RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mNameView = itemView.findViewById(R.id.nameOfRestaurantResult);
             mDescriptionView = itemView.findViewById(R.id.descriptionOfRestaurantResult);
             mFoodCategoryView = itemView.findViewById(R.id.categoryOfRestaurantResult);
             mAuthenticityView = itemView.findViewById(R.id.authenticityLevel);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -42,7 +65,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result_item, parent, false);
-        RestaurantViewHolder viewHolder = new RestaurantViewHolder(view);
+        RestaurantViewHolder viewHolder = new RestaurantViewHolder(view, mListener);
+
+
         return viewHolder;
     }
 

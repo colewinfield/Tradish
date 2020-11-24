@@ -72,17 +72,28 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle.Inverse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="6dp"
+        android:text="RECENTS"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
         android:background="@color/superLightRecents"
         android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <LinearLayout
             android:id="@+id/recentSpots"
@@ -95,10 +106,10 @@
             android:padding="4dp">
 
             <TextView
-                android:layout_gravity="center_horizontal"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="Second"
                 android:textStyle="bold" />
 
@@ -110,10 +121,10 @@
                 android:src="@drawable/tradish_heart" />
 
             <TextView
-                android:layout_gravity="center_horizontal"
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:text="Serving"
                 android:textStyle="bold" />
 

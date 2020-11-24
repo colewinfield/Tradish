@@ -95,6 +95,15 @@ public class ResultsFragment extends Fragment {
                             mRestaurants.add(restaurant);
                             mAdapter = new RestaurantAdapter(mRestaurants);
                             mRecyclerView.setAdapter(mAdapter);
+
+                            mAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    mRestaurants.get(position);
+
+                                    // TODO: Finish after mainFragment
+                                }
+                            });
                         }
 
                         @Override
@@ -142,6 +151,7 @@ public class ResultsFragment extends Fragment {
                 }
             });
         }
+
 
         return rootView;
     }

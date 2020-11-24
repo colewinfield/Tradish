@@ -1,7 +1,10 @@
 package edu.cs.fsu.tradish;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -12,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,6 +54,12 @@ public class MainFragment extends Fragment {
     private RestaurantAdapter mAdapter;
     private ArrayList<Restaurant> mRestaurants;
     private RecyclerView.LayoutManager mLayoutManager;
+
+    private Dialog mDialog;
+    private TextView mDialogName;
+    private TextView mDialogCategory;
+    private Button mDialogNavigate;
+
 
     //private Toolbar toolbar;
 
@@ -126,6 +137,8 @@ public class MainFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        initDialog();
+
         mRestaurants = new ArrayList<>();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -148,6 +161,18 @@ public class MainFragment extends Fragment {
 
                     mAdapter = new RestaurantAdapter(mRestaurants);
                     mRecyclerView.setAdapter(mAdapter);
+
+                    mAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            Log.d(TAG, "Test Click: " + mRestaurants.get(position));
+                            Restaurant restaurant = mRestaurants.get(position);
+
+                            mDialogName.setText(restaurant.getName());
+                            mDialogCategory.setText(restaurant.getCategory());
+                            mDialog.show();
+                        }
+                    });
                 }
             }
 
@@ -176,6 +201,17 @@ public class MainFragment extends Fragment {
 
 
     }
+
+    public void initDialog() {
+        mDialog = new Dialog(getContext());
+        mDialog.setContentView(R.layout.dialog_restaurant);
+        mDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        mDialogName = mDialog.findViewById(R.id.dialog_restaurant_name);
+        mDialogCategory = mDialog.findViewById(R.id.dialog_restaurant_category);
+        mDialogNavigate = mDialog.findViewById(R.id.dialog_navigation_button);
+    }
+
 
     // ##########################################################################################
     // # Used anywhere a listener is needed. A listener is used to communicate with the Main-   #
