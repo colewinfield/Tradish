@@ -18,12 +18,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.geofire.GeoLocation;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.ContentValues.TAG;
@@ -35,6 +44,12 @@ public class MainFragment extends Fragment {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private double mLongitude, mLatitude;
+
+    private RecyclerView mRecyclerView;
+    private RestaurantAdapter mAdapter;
+    private ArrayList<Restaurant> mRestaurants;
+    private RecyclerView.LayoutManager mLayoutManager;
+
     //private Toolbar toolbar;
 
 
@@ -106,6 +121,44 @@ public class MainFragment extends Fragment {
     private void init(View view) {
         mSearchFAB = view.findViewById(R.id.fab_search_main);
         mNewLocationFAB = view.findViewById(R.id.fab_new_location_main);
+        mRecyclerView = view.findViewById(R.id.dashboardRecyclerView);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        mRestaurants = new ArrayList<>();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+
+        Query query = reference.child("Restaurants").
+                orderByChild("username").equalTo(MainActivity.sCurrentUser.getUsername());
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    Log.d(TAG, "onDataChange: dataSnapshot exists");
+
+                    for (DataSnapshot item : dataSnapshot.getChildren()) {
+                        Restaurant restaurant = item.getValue(Restaurant.class);
+                        mRestaurants.add(restaurant);
+                        Log.d(TAG, "onDataChange: MainFragment: " + restaurant.toString());
+                    }
+
+                    mAdapter = new RestaurantAdapter(mRestaurants);
+                    mRecyclerView.setAdapter(mAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
 //        drawerLayout = view.findViewById(R.id.drawer_layout);
 //        navigationView = view.findViewById(R.id.nav_view);
         //toolbar = view.findViewById(R.id.toolbar);
@@ -113,6 +166,7 @@ public class MainFragment extends Fragment {
         // ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_nav, R.string.close_nav);
         //drawerLayout.addDrawerListener(toggle);
         //toggle.syncState();
+
         mNewLocationFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

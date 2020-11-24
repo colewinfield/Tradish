@@ -15,6 +15,7 @@ public class Restaurant {
     private String mCategory;
     private String mAddress;
     private String mReferenceId;
+    private String mUsername;
     private User mCreator;
     private RestaurantLocation mLocation;
     private double mAuthenticityRating;
@@ -80,6 +81,14 @@ public class Restaurant {
 
     public void setCreator(User creator) {
         mCreator = creator;
+    }
+
+    public String getUsername() {
+        return mUsername;
+    }
+
+    public void setUsername(String username) {
+        mUsername = username;
     }
 
     @Override
