@@ -25,23 +25,25 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:gravity="center_vertical"
+        android:id="@+id/relativeLayout"
+        android:layout_marginTop="16dp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginLeft="20dp"
         android:background="@color/superLightTeal"
+        android:gravity="center_vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:gravity="center_vertical"
             android:id="@+id/foundSpotsLinear"
             android:layout_width="170dp"
             android:layout_height="280dp"
             android:layout_margin="10dp"
             android:background="@color/colorLight"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="4dp">
 
@@ -55,7 +57,7 @@
                 style="@style/TextAppearance.MaterialComponents.Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Found Spots"
+                android:text="My Spots"
                 android:textStyle="bold" />
 
 
@@ -66,6 +68,63 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/foundSpotsLinear"
+            android:background="@color/cardview_light_background" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/superLightRecents"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
+
+        <LinearLayout
+            android:id="@+id/recentSpots"
+            android:layout_width="170dp"
+            android:layout_height="280dp"
+            android:layout_margin="10dp"
+            android:background="@color/recentsCard"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Second"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="63dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/tradish_heart" />
+
+            <TextView
+                android:layout_gravity="center_horizontal"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serving"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recentSpotsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/recentSpots"
             android:background="@color/cardview_light_background" />
 
     </RelativeLayout>
@@ -108,19 +167,6 @@
             app:fab_title="Add Tradish spot" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    <TextView
-        android:id="@+id/textView"
-        style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle.Inverse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:paddingBottom="10dp"
-        android:text="YOUR CONTRIBUTIONS"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
