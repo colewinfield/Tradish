@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         public TextView mDescriptionView;
         public TextView mAuthenticityView;
         public TextView mFoodCategoryView;
+        public RatingBar ratingBar;
 
         public RestaurantViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
@@ -42,7 +44,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             mDescriptionView = itemView.findViewById(R.id.descriptionOfRestaurantResult);
             mFoodCategoryView = itemView.findViewById(R.id.categoryOfRestaurantResult);
             mAuthenticityView = itemView.findViewById(R.id.authenticityLevel);
-
+            ratingBar = itemView.findViewById(R.id.ResultsRatingBar);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -65,6 +67,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.result_item, parent, false);
+
         RestaurantViewHolder viewHolder = new RestaurantViewHolder(view, mListener);
 
 
@@ -79,6 +82,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.mFoodCategoryView.setText(currentRestaurant.getCategory());
         holder.mDescriptionView.setText(currentRestaurant.getDescription());
         holder.mAuthenticityView.setText("Authenticity of " + currentRestaurant.getAuthenticityRating());
+        holder.ratingBar.setMax(5);
+        holder.ratingBar.setRating((int) currentRestaurant.getAuthenticityRating());
     }
 
     @Override

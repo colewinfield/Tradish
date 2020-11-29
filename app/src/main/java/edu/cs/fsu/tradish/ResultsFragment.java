@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class ResultsFragment extends Fragment {
     public static int DISTANCE_RADIUS_DEFAULT = 10;
 
     private SearchView mSearchView;
+    private ScrollView mScrollView;
     private RecyclerView mRecyclerView;
     private RestaurantAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
