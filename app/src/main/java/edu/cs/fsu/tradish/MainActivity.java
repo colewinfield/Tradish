@@ -164,6 +164,15 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         FirebaseAuth auth = FirebaseAuth.getInstance();
         return (auth.getCurrentUser() != null);
     }
+    // ##########################################################################################
+    // # Uses Firebase to grab the current instance and sign out the user. Returns true if the  #
+    // # user has succesfully signed out.                                                       #
+    // ##########################################################################################
+    public boolean Logout() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.signOut();
+        return(auth.getCurrentUser() == null);
+    }
 
 
     @Override

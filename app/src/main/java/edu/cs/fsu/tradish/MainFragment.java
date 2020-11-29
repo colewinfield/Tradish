@@ -47,6 +47,7 @@ import static android.content.ContentValues.TAG;
 public class MainFragment extends Fragment {
     private FloatingActionButton mSearchFAB;
     private FloatingActionButton mNewLocationFAB;
+    private FloatingActionButton mLogout;
     private OnDashboardListener mListener;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -134,6 +135,7 @@ public class MainFragment extends Fragment {
     private void init(View view) {
         mSearchFAB = view.findViewById(R.id.fab_search_main);
         mNewLocationFAB = view.findViewById(R.id.fab_new_location_main);
+        mLogout = view.findViewById(R.id.fab_logout);
         mRecyclerView = view.findViewById(R.id.dashboardRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -214,7 +216,15 @@ public class MainFragment extends Fragment {
                 mListener.onStartNewLocation();
             }
         });
-
+        mLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mListener.Logout())
+                {
+                    mListener.onStartLoginFragment();
+                }
+            }
+        });
 
     }
 
@@ -264,6 +274,8 @@ public class MainFragment extends Fragment {
         void onStartNewLocation();
 
         void onStartSearch(double latitude, double longitude);
+        boolean Logout();
+        void onStartLoginFragment();
     }
 
 
