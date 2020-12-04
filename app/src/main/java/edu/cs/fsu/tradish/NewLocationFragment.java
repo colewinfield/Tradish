@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.transition.TransitionInflater;
 
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -50,6 +51,7 @@ public class NewLocationFragment extends Fragment {
     private OnNewLocationListener mListener;
     private FirebaseDatabase mRootNode;
     private DatabaseReference mDatabaseReference;
+
 
     // ##########################################################################################
     // # onCreateView: used to initialize the widgets within the UI. Using init(rootView) to    #
@@ -172,6 +174,7 @@ public class NewLocationFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     private void init(View view) {
