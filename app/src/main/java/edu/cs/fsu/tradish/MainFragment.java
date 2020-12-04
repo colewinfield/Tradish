@@ -58,6 +58,7 @@ public class MainFragment extends Fragment {
     private RestaurantAdapter mAdapter;
     private ArrayList<Restaurant> mRestaurants;
     private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager mLayoutManagerRecents;
 
     private RecyclerView mRecentSpots;
     private RestaurantAdapter mRecentsAdapter;
@@ -142,6 +143,7 @@ public class MainFragment extends Fragment {
         mSearchFAB = view.findViewById(R.id.fab_search_main);
         mNewLocationFAB = view.findViewById(R.id.fab_new_location_main);
         mLogout = view.findViewById(R.id.fab_logout);
+
         mRecyclerView = view.findViewById(R.id.dashboardRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -149,7 +151,8 @@ public class MainFragment extends Fragment {
 
         mRecentSpots = view.findViewById(R.id.recentSpotsRecycler);
         mRecentSpots.setHasFixedSize(true);
-        mRecentSpots.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mLayoutManagerRecents = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        mRecentSpots.setLayoutManager(mLayoutManagerRecents);
 
 
         initDialog();
@@ -232,6 +235,7 @@ public class MainFragment extends Fragment {
             }
         });
 
+        mRecentSpots.setAdapter(MainActivity.sRestaurantAdapter);
     }
 
     public void initDialog() {
@@ -286,9 +290,7 @@ public class MainFragment extends Fragment {
     }
 
     public void setAdapter(){
-        Log.d(TAG, "setAdapter: Did it work?");
-        mRecentsAdapter = new RestaurantAdapter(MainActivity.sRecentList);
-        mRecentSpots.setAdapter(mRecentsAdapter);
+        mRecentSpots.setAdapter(MainActivity.sRestaurantAdapter);
     }
 
 }

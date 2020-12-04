@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     public static final String EXTRA_LONGITUDE = "LONGITUDE";
     public static User sCurrentUser = new User();
     public static ArrayList<Restaurant> sRecentList;
+    public static RestaurantAdapter sRestaurantAdapter;
 
 
     // ##########################################################################################
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         }
 
         sRecentList = new ArrayList<>();
+        sRestaurantAdapter = new RestaurantAdapter(sRecentList);
     }
 
 
