@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -12,21 +15,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.firebase.geofire.GeoLocation;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
-import javax.xml.transform.Result;
+import java.util.ArrayList;
 
 import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity implements RegisterFragment.OnRegisterListener,
     LoginFragment.OnLoginListener, MainFragment.OnDashboardListener,
-    NewLocationFragment.OnNewLocationListener {
+    NewLocationFragment.OnNewLocationListener, ResultsFragment.OnResultsAdapterListener {
 
     public static final String EXTRA_LATITUDE = "latitude";
     public static final String EXTRA_LONGITUDE = "LONGITUDE";
     public static User sCurrentUser = new User();
+    public static ArrayList<Restaurant> sRecentList;
 
 
     // ##########################################################################################
@@ -64,7 +66,9 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
             onStartLogin();
         }
 
+        sRecentList = new ArrayList<>();
     }
+
 
     // ##########################################################################################
     // # The below methods are just methods used to create a fragment of some type and then     #
@@ -200,5 +204,12 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
                         Manifest.permission.ACCESS_NETWORK_STATE,
                         Manifest.permission.ACCESS_COARSE_LOCATION},
                 101);
+    }
+
+    @Override
+    public void onSetAdapter() {
+        FragmentManager fm = getSupportFragmentManager();
+        MainFragment fragment = (MainFragment) fm.findFragmentByTag(MainFragment.class.getCanonicalName());
+        fragment.setAdapter();
     }
 }

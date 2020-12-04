@@ -58,6 +58,9 @@ public class MainFragment extends Fragment {
     private ArrayList<Restaurant> mRestaurants;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private RecyclerView mRecentSpots;
+    private RestaurantAdapter mRecentsAdapter;
+
     private Dialog mDialog;
     private TextView mDialogName;
     private TextView mDialogCategory;
@@ -141,6 +144,11 @@ public class MainFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        mRecentSpots = view.findViewById(R.id.recentSpotsRecycler);
+        mRecentSpots.setHasFixedSize(true);
+        mRecentSpots.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+
         initDialog();
 
         mRestaurants = new ArrayList<>();
@@ -170,7 +178,7 @@ public class MainFragment extends Fragment {
                         @Override
                         public void onItemClick(int position) {
                             Log.d(TAG, "Test Click: " + mRestaurants.get(position));
-                            Restaurant restaurant = mRestaurants.get(position);
+                            final Restaurant restaurant = mRestaurants.get(position);
                             final RestaurantLocation location = restaurant.getLocation();
 
                             mDialogName.setText(restaurant.getName());
@@ -185,6 +193,9 @@ public class MainFragment extends Fragment {
                                                     + location.getLongitude())
                                     );
                                     intent.setPackage("com.google.android.apps.maps");
+                                    MainActivity.sRecentList.add(restaurant);
+                                    setAdapter();
+
                                     startActivity(intent);
 
                                 }
@@ -201,14 +212,6 @@ public class MainFragment extends Fragment {
             }
         });
 
-
-//        drawerLayout = view.findViewById(R.id.drawer_layout);
-//        navigationView = view.findViewById(R.id.nav_view);
-        //toolbar = view.findViewById(R.id.toolbar);
-        // setSupportActionBar(toolbar);
-        // ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_nav, R.string.close_nav);
-        //drawerLayout.addDrawerListener(toggle);
-        //toggle.syncState();
 
         mNewLocationFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,6 +268,7 @@ public class MainFragment extends Fragment {
         mListener = null;
     }
 
+
     // ##########################################################################################
     // # Interface for the Listener. MainActivity implements this interface, so it must have    #
     // # these methods that create different fragments.                                         #
@@ -278,5 +282,10 @@ public class MainFragment extends Fragment {
         void onStartLoginFragment();
     }
 
+    public void setAdapter(){
+        Log.d(TAG, "setAdapter: Did it work?");
+        mRecentsAdapter = new RestaurantAdapter(MainActivity.sRecentList);
+        mRecentSpots.setAdapter(mRecentsAdapter);
+    }
 
 }

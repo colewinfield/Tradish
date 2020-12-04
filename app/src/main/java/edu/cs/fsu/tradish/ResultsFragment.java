@@ -1,6 +1,7 @@
 package edu.cs.fsu.tradish;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -51,6 +52,7 @@ public class ResultsFragment extends Fragment {
     private DatabaseReference mFirebaseReference;
     private ArrayList<Restaurant> mRestaurants;
     private GeoLocation mGeoLocation;
+    private OnResultsAdapterListener mListener;
 
     private Dialog mDialog;
     private TextView mDialogName;
@@ -100,53 +102,57 @@ public class ResultsFragment extends Fragment {
 
                     FirebaseDatabase.getInstance().getReference("Restaurants").child(key)
                             .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.d(TAG, "onDataChange: Checking if entered.");
-
-
-                            String name = snapshot.child("name").getValue(String.class);
-                            Log.d(TAG, "onDataChange name: " + name);
-                            Restaurant restaurant = snapshot.getValue(Restaurant.class);
-                            mRestaurants.add(restaurant);
-                            mAdapter = new RestaurantAdapter(mRestaurants);
-                            mRecyclerView.setAdapter(mAdapter);
-
-                            mAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
                                 @Override
-                                public void onItemClick(int position) {
-                                    mRestaurants.get(position);
-                                    Log.d(TAG, "Test Click: " + mRestaurants.get(position));
-                                    Restaurant restaurant = mRestaurants.get(position);
-                                    final RestaurantLocation location = restaurant.getLocation();
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Log.d(TAG, "onDataChange: Checking if entered.");
 
-                                    mDialogName.setText(restaurant.getName());
-                                    mDialogCategory.setText(restaurant.getCategory());
-                                    mDialogNavigate.setOnClickListener(new View.OnClickListener() {
+
+                                    String name = snapshot.child("name").getValue(String.class);
+                                    Log.d(TAG, "onDataChange name: " + name);
+                                    Restaurant restaurant = snapshot.getValue(Restaurant.class);
+                                    mRestaurants.add(restaurant);
+                                    mAdapter = new RestaurantAdapter(mRestaurants);
+                                    mRecyclerView.setAdapter(mAdapter);
+
+                                    mAdapter.setOnItemClickListener(new RestaurantAdapter.OnItemClickListener() {
                                         @Override
-                                        public void onClick(View view) {
-                                            Intent intent = new Intent(Intent.ACTION_VIEW,
-                                                    Uri.parse("google.navigation:q="
-                                                            + location.getLatitude()
-                                                            + ","
-                                                            + location.getLongitude())
-                                            );
-                                            intent.setPackage("com.google.android.apps.maps");
-                                            startActivity(intent);
+                                        public void onItemClick(int position) {
+                                            mRestaurants.get(position);
+                                            Log.d(TAG, "Test Click: " + mRestaurants.get(position));
+                                            final Restaurant restaurant = mRestaurants.get(position);
+                                            final RestaurantLocation location = restaurant.getLocation();
 
+                                            mDialogName.setText(restaurant.getName());
+                                            mDialogCategory.setText(restaurant.getCategory());
+                                            mDialogNavigate.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    Intent intent = new Intent(Intent.ACTION_VIEW,
+                                                            Uri.parse("google.navigation:q="
+                                                                    + location.getLatitude()
+                                                                    + ","
+                                                                    + location.getLongitude())
+                                                    );
+                                                    intent.setPackage("com.google.android.apps.maps");
+
+                                                    MainActivity.sRecentList.add(restaurant);
+                                                    mListener.onSetAdapter();
+
+                                                    startActivity(intent);
+
+                                                }
+                                            });
+                                            mDialog.show();
+                                            // TODO: Finish after mainFragment
                                         }
                                     });
-                                    mDialog.show();
-                                    // TODO: Finish after mainFragment
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }
 
                 @Override
@@ -217,6 +223,27 @@ public class ResultsFragment extends Fragment {
         mDialogName = mDialog.findViewById(R.id.dialog_restaurant_name);
         mDialogCategory = mDialog.findViewById(R.id.dialog_restaurant_category);
         mDialogNavigate = mDialog.findViewById(R.id.dialog_navigation_button);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnResultsAdapterListener) {
+            mListener = (OnResultsAdapterListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnResultsAdapterListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnResultsAdapterListener {
+        void onSetAdapter();
     }
 
 }

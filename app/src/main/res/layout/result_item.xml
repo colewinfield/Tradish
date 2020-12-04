@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     app:cardCornerRadius="4dp">
 
-<!--THIS IS THE LAYOUT FOR THE CARDS THAT WILL DISPLAY A RESTAURANT/MARKET IN RESULTS-->
-    
+    <!--THIS IS THE LAYOUT FOR THE CARDS THAT WILL DISPLAY A RESTAURANT/MARKET IN RESULTS-->
+    <!--    <ScrollView-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content">-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -29,43 +32,44 @@
 
         <TextView
             android:id="@+id/categoryOfRestaurantResult"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/descriptionOfRestaurantResult"
-            style="@style/TextAppearance.MaterialComponents.Subtitle1"
-            android:textStyle="bold"
             android:layout_marginBottom="12dp"
+            android:textStyle="bold"
             tools:text="Category" />
 
         <TextView
             android:id="@+id/descriptionOfRestaurantResult"
+            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/nameOfRestaurantResult"
-            style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_marginBottom="8dp"
             tools:text="@string/lipsum" />
 
         <TextView
             android:id="@+id/authenticityLevel"
+            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/descriptionOfRestaurantResult"
             android:layout_marginStart="2dp"
             android:layout_marginTop="24dp"
-            style="@style/TextAppearance.MaterialComponents.Subtitle2"
             tools:text="Authenticity: 4.3 Stars" />
 
         <RatingBar
             android:id="@+id/ResultsRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="41dp"
-            android:isIndicator="true"
             android:layout_below="@id/authenticityLevel"
             android:layout_marginTop="-3dp"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:isIndicator="true" />
 
 
     </RelativeLayout>
 
+    <!--    </ScrollView>-->
 </androidx.cardview.widget.CardView>

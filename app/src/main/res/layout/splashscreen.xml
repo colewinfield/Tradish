@@ -3,23 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/colorAccent">
+    android:background="@android:color/black">
 
     <ImageView
         android:id="@+id/logo_id"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/food_truck"/>
+        android:src="@drawable/tradish_icon"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo_id"
         android:layout_centerHorizontal="true"
-        android:fontFamily="sans-serif-black"
+        android:fontFamily="@font/rock_salt"
         android:text="@string/app_name"
-        android:textColor="@android:color/background_dark"
+        android:textColor="@color/colorPrimary"
         android:textSize="36sp"
         android:textStyle="italic" />
     </RelativeLayout>

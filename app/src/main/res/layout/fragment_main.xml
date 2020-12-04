@@ -145,20 +145,6 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/ProfileHeader"
-        android:layout_width="394dp"
-        android:layout_height="34dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/colorLight"
-        android:textAlignment="textEnd"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/fab_expand_menu_button_main"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab_expand_menu_button_main"
@@ -204,14 +190,6 @@
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
-    <Switch
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Dark Mode"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="11dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
