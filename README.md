@@ -50,4 +50,6 @@ location; this is used for querying against the current user's location to find 
 ####################################################################################################
 
 Testing was done on a Pixel 2 (physical device) running API 30. Testing was also done through an
-emulated Nexus 4 running API 19 (Kitkat), a Pixel 2 on API 28 and 29, and a Pixel 3 on API 29.                                             
+emulated Nexus 4 running API 19 (Kitkat), a Pixel 2 on API 28 and 29, and a Pixel 3 on API 29.
+
+GitHub: https://github.com/colewinfield/Tradish
