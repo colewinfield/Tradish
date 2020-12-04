@@ -1,23 +1,27 @@
 package edu.cs.fsu.tradish;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
@@ -67,7 +71,12 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
             onStartLogin();
         }
 
-        sRecentList = new ArrayList<>();
+        sRecentList = getRecentList();
+
+        if (sRecentList == null) {
+            sRecentList = new ArrayList<>();
+        }
+
         sRestaurantAdapter = new RestaurantAdapter(sRecentList);
     }
 
@@ -177,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
     public boolean Logout() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         auth.signOut();
+        saveRecents();
         return(auth.getCurrentUser() == null);
     }
 
@@ -213,5 +223,31 @@ public class MainActivity extends AppCompatActivity implements RegisterFragment.
         FragmentManager fm = getSupportFragmentManager();
         MainFragment fragment = (MainFragment) fm.findFragmentByTag(MainFragment.class.getCanonicalName());
         fragment.setAdapter();
+    }
+
+    private void saveRecents() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPrefs.edit();
+        Gson gson = new Gson();
+
+        String json = gson.toJson(sRecentList);
+
+        editor.putString(sCurrentUser.getUsername(), json);
+        editor.commit();
+    }
+
+    private ArrayList<Restaurant> getRecentList() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString(sCurrentUser.getUsername(), "");
+        Type type = new TypeToken<List<Restaurant>>() {}.getType();
+
+        return gson.fromJson(json, type);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveRecents();
     }
 }
